@@ -1,5 +1,6 @@
-using GymManagement.Application.Services;
+using GymManagement.Application.Subscriptions.Commands.CreateSubscription;
 using GymManagement.Contracts.Subscriptions;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GymManagement.Api.Controllers;
@@ -8,20 +9,21 @@ namespace GymManagement.Api.Controllers;
 [Route("[controller]")]
 public class SubscriptionsController : ControllerBase
 {
-    private readonly ISubscriptionsService _subscriptionService;
+    private readonly IMediator _mediator;
 
-    public SubscriptionsController(ISubscriptionsService subscriptionService)
+    public SubscriptionsController(IMediator mediator)
     {
-        _subscriptionService = subscriptionService;
+        _mediator = mediator;
     }
 
     [HttpPost(Name = "GetWeatherForecasddt")]
-    public IActionResult CreateSubscription(CreateSubscriptionbRequest request)
+    public async Task<IActionResult> CreateSubscription(CreateSubscriptionbRequest request)
     {
-        var subscriptionId = _subscriptionService.CreateSubscription(
-            request.SubscriptionType.ToString(),
+        var command = new CreateSubscriptionCommand(
+            request.SubscriptionType.ToString(), 
             request.AdminId
             );
+        var subscriptionId = await _mediator.Send(command);
 
         var response = new SubscriptionResponse(subscriptionId, request.SubscriptionType);
 
