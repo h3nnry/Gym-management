@@ -21,10 +21,10 @@ public record CreateSubscriptionCommandHandler : IRequestHandler<CreateSubscript
     {
 
         // Create a subscription
-        var subscription = new Subscription {
-            Id = Guid.NewGuid(),
-            SubscriptionType = request.SubscriptionType
-        };
+        var subscription = new Subscription (
+            subscriptionType: request.SubscriptionType,
+            adminId: request.AdminId
+        );
 
         // Add it to database
         await _subscriptionRepository.AddSubscriptionAsync(subscription);
