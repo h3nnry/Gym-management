@@ -9,12 +9,12 @@ public record CreateSubscriptionCommandHandler : IRequestHandler<CreateSubscript
 {
     private readonly ISubscriptionsRepository _subscriptionRepository;
 
-    // private readonly IUnitOfWork _unitOfWork;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public CreateSubscriptionCommandHandler(ISubscriptionsRepository subscriptionRepository)
+    public CreateSubscriptionCommandHandler(ISubscriptionsRepository subscriptionRepository, IUnitOfWork unitOfWork)
     {
         _subscriptionRepository = subscriptionRepository;
-        // _unitOfWork = unitOfWork;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task<ErrorOr<Subscription>> Handle(CreateSubscriptionCommand request, CancellationToken cancellationToken)
@@ -28,7 +28,7 @@ public record CreateSubscriptionCommandHandler : IRequestHandler<CreateSubscript
 
         // Add it to database
         await _subscriptionRepository.AddSubscriptionAsync(subscription);
-        // await _unitOfWork.CommitChangesAsync();
+        await _unitOfWork.CommitChangesAsync();
 
         return subscription;
     }
