@@ -1,14 +1,11 @@
 using GymManagement.Application;
 using GymManagement.Infrastructure;
-// using GymManagement.Application.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 {
     builder.Services.AddControllers();
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen();
-
-    // builder.Services.AddScoped<ISubscriptionsService, SubscriptionsService>();
 
     builder.Services
         .AddApplication()

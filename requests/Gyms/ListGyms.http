@@ -1,0 +1,4 @@
+@host=http://localhost:5209
+@subscriptionId=F606E4FD-C546-4602-BAD9-2FED68286EF4
+
+GET {{host}}/subscriptions/{{subscriptionId}}/gyms
