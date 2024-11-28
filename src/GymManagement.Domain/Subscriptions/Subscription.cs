@@ -29,12 +29,12 @@ public class Subscription
 
     public ErrorOr<Success> AddGym(Gym gym)
     {
-        _gymIds.Throw().IfContains(gym.Id);
+        // _gymIds.Throw().IfContains(gym.Id);
 
-        if (_gymIds.Count >= _maxGyms)
-        {
+        // if (_gymIds.Count >= _maxGyms)
+        // {
             return SubscriptionErrors.CannotHaveMoreGymsThanSubscriptionAllows;
-        }
+        // }
 
         _gymIds.Add(gym.Id);
 
